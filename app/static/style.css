@@ -1,0 +1,148 @@
+/* static/style.css */
+:root {
+    --primary-color: #00BCD4;
+    --secondary-color: #006064;
+    --background-gradient: linear-gradient(135deg, #E0F7FA 0%, #B2EBF2 100%);
+}
+
+body {
+    margin: 0;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    background: var(--background-gradient);
+    min-height: 100vh;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.logo {
+    height: 50px;  /* Reduced from 75px */
+    width: auto;   /* Maintain aspect ratio */
+    margin-right: 20px;
+}
+
+.chat-container {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+#chat-history {
+    flex: 1;
+    background: white;
+    border: 2px solid var(--primary-color);
+    border-radius: 10px;
+    padding: 15px;
+    height: 400px;
+    overflow-y: auto;
+}
+
+.input-container {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    width: 100%;  /* Full width container */
+}
+
+#user-input {
+    flex: 1;  /* Grow to fill available space */
+    padding: 10px;
+    border: 2px solid var(--primary-color);
+    border-radius: 10px;
+    font-size: 14px;
+}
+
+#send-button {
+    min-width: 80px;  /* Minimum width for button */
+}
+
+button {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+button:hover {
+    background-color: #00ACC1;
+}
+
+footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 40px;
+}
+
+.social-links a {
+    color: var(--secondary-color);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.footer-logo {
+    height: 30px;  /* Even smaller in footer */
+    width: auto;
+    margin-right: 10px;
+}
+
+.university-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.doctor-image img {
+    width: 150px;  /* Set fixed width */
+    height: auto;  /* Maintain aspect ratio */
+    border-radius: 10px;
+    margin-right: 20px;
+    border: 2px solid var(--primary-color);
+    padding: 5px;
+}
+
+.doctor-image {
+    display: flex;
+    align-items: flex-start;
+    flex-shrink: 0;  /* Prevent image from shrinking */
+}
+
+.preset-questions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.button-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.button-row button {
+    flex: 1;
+    background-color: #00CED1;
+    color: black;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 20px;
+    font-size: 14px;
+    transition: background-color 0.2s;
+}
+
+.button-row button:hover {
+    background-color: #00BCD4;
+}
+
+.button-row button:active {
+    background-color: #0097A7;
+    transform: scale(0.98);
+}
