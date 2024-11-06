@@ -51,8 +51,26 @@ userInput.addEventListener('keypress', e => {
     if (e.key === 'Enter') sendMessage();
 });
 
-// Handle preset questions
+// Add event listeners for preset buttons
+document.querySelectorAll('.preset-btn').forEach(button => {
+    button.addEventListener('click', () => {
+        const question = button.getAttribute('data-question');
+        sendQuestion(question);
+    });
+});
+
 function sendQuestion(question) {
-    userInput.value = question;
-    sendMessage();
+    if (!question) return;
+    
+    // Add user message
+    const userDiv = document.createElement('div');
+    userDiv.className = 'user-message';
+    userDiv.innerHTML = `<strong>You:</strong> <span style="color: #FF4444; font-size: 16px;">${question}</span>`;
+    chatHistory.appendChild(userDiv);
+    
+    // Emit message
+    socket.emit('send_message', { message: question });
+    
+    // Scroll to bottom
+    chatHistory.scrollTop = chatHistory.scrollHeight;
 }

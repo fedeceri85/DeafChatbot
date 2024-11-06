@@ -27,31 +27,14 @@ system_message = {
 
 @app.route('/')
 def home():
-    app.logger.debug("Loading index page")
-    try:
-        return render_template('index.html')
-    except Exception as e:
-        app.logger.error(f"Error rendering template: {e}")
-        return str(e), 500
+    app.logger.info("Loading index page")
+    return render_template('index.html')
 
 @socketio.on('connect')
 def handle_connect():
     app.logger.debug("Client connected")
-    # Send welcome message
-    accumulated_response = ""
-    for chunk in ollama.generate(
-        model=LLAMA_MODEL,
-        prompt="Introduce yourself briefly as Dr. Hear, a hearing specialist. Use two sentences max.",
-        stream=True
-    ):
-        accumulated_response += chunk['response']
-        emit('response_chunk', {
-            'chunk': markdown.markdown(accumulated_response),
-            'is_complete': False
-        })
-    
     emit('response_chunk', {
-        'chunk': markdown.markdown(accumulated_response),
+        'chunk': "Hello! I'm Dr. Hear, a specialist in hearing and auditory science. How can I help you today?",
         'is_complete': True
     })
 

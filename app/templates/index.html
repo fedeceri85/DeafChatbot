@@ -25,14 +25,14 @@
 
         <div class="preset-questions">
             <div class="button-row">
-                <button onclick="sendQuestion('How does hearing work?')">How does hearing work?</button>
-                <button onclick="sendQuestion('How can I protect my hearing?')">How can I protect my hearing?</button>
-                <button onclick="sendQuestion('What are common causes of hearing loss?')">What are common causes of hearing loss?</button>
+                <button class="preset-btn" data-question="How does hearing work?">How does hearing work?</button>
+                <button class="preset-btn" data-question="How can I protect my hearing?">How can I protect my hearing?</button>
+                <button class="preset-btn" data-question="What are common causes of hearing loss?">What are common causes of hearing loss?</button>
             </div>
             <div class="button-row">
-                <button onclick="sendQuestion('How does our hearing work?')">How does our hearing work?</button>
-                <button onclick="sendQuestion('Can hearing loss be cured?')">Can hearing loss be cured?</button>
-                <button onclick="sendQuestion('What is tinnitus?')">What is tinnitus?</button>
+                <button class="preset-btn" data-question="How does our hearing work?">How does our hearing work?</button>
+                <button class="preset-btn" data-question="Can hearing loss be cured?">Can hearing loss be cured?</button>
+                <button class="preset-btn" data-question="What is tinnitus?">What is tinnitus?</button>
             </div>
         </div>
 
@@ -49,6 +49,10 @@
         </footer>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <script>
+        // Initialize socket with explicit URL
+        const socket = io('http://localhost:5000');
+    </script>
     <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>
