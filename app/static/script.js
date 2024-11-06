@@ -45,6 +45,7 @@ socket.on('response_chunk', data => {
     chatHistory.scrollTop = chatHistory.scrollHeight;
 });
 
+
 // Event listeners
 sendButton.addEventListener('click', sendMessage);
 userInput.addEventListener('keypress', e => {
