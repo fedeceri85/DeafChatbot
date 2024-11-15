@@ -13,6 +13,21 @@ import markdown
 # Global constants
 LLAMA_MODEL = "llama3.1:8b"  # Large model
 
+# Doctor's name as a global variable
+DR_NAME = "Dr. Hearwell"#"Dr Harmony Hearwell"#"Dr. Thomas Audley"
+
+# Model configuration
+MODEL_CONFIG = {
+    "model": LLAMA_MODEL,
+    # "options": {
+    #     "temperature": 0.7, # Higher temperature: more randomness
+    #     "top_p": 0.9, # Higher top_p: more diversity
+    #     "top_k": 40, # 0 means no top_k filtering
+    #     "num_ctx": 4096, # Max context window size
+    #     "repeat_penalty": 1.1, # Higher penalty: more diverse responses
+    #     "stop": ["User:", "Human:", "Assistant:"]# Stop generation at these tokens
+    # }
+}
 class ChatbotApp(QMainWindow):
     """
     A PyQt-based chatbot application specialized for hearing loss related queries.
@@ -34,7 +49,7 @@ class ChatbotApp(QMainWindow):
         # Initialize message history with system message
         self.message_history = [{
             "role": "system",
-            "content": """You are a hearing doctor (Dr. Hear) participating in an outreach activity explaining hearing loss
+            "content": f"""You are a hearing doctor ({DR_NAME}) participating in an outreach activity explaining hearing loss
               and auditory neuroscience to the public.
             Be positive and relatively short in the responses, but not too concise. If you are unsure do not invent answers, 
             just say that you do not know.
@@ -412,9 +427,10 @@ class ChatbotApp(QMainWindow):
         self._update_chat_display()
         
         accumulated_response = ""
+        introduction_prompt = f"Introduce yourself briefly as {DR_NAME}. Use two sentences max."
         for chunk in ollama.generate(
-            model=LLAMA_MODEL,
-            prompt="Introduce yourself briefly as Dr. Hear. Use two sentences max.",
+            **MODEL_CONFIG,
+            prompt=introduction_prompt,
             stream=True
         ):
             accumulated_response += chunk['response']
@@ -436,7 +452,7 @@ class ChatbotApp(QMainWindow):
         self.message_history.append({"role": "assistant", "content": ""})
         
         for chunk in ollama.generate(
-            model=LLAMA_MODEL,
+            **MODEL_CONFIG,
             prompt=self._get_conversation_history() + '\n' + user_input,
             stream=True
         ):
@@ -462,15 +478,15 @@ class ChatbotApp(QMainWindow):
             if msg["role"] == "system":
                 continue  # Skip system messages in display
             if msg["role"] == "user":
-                content = f'<div style="text-align: justify; line-height: 1.5;"><span style="color: red; font-size: 18px;">{msg["content"]}</span></div><br>'
-                prefix = '<span style="color: red; font-size: 18px;">You: </span>'
+                content = f'<div style="text-align: justify; line-height: 1.5;"><span style="color: red; font-size: 17px;">{msg["content"]}</span></div><br>'
+                prefix = '<span style="color: red; font-size: 17px;">You: </span>'
             else:
                 content = f'<div style="text-align: justify; line-height: 1.5;">{markdown.markdown(msg["content"])}</div><br>'
-                prefix = '<span style="color: black; font-size: 18px; font-weight: bold;">Dr. Hear: </span>'
+                prefix = f'<span style="color: black; font-size: 17px; font-weight: bold;">{DR_NAME}: </span>'
             formatted_messages.append(f"{prefix}{content}")
             
         self.chat_history.setHtml("""
-            <div style="font-size: 18px; line-height: 1.5;">
+            <div style="font-size: 16.5px; line-height: 1.5;">
                 {messages}
             </div>
         """.format(messages="\n".join(formatted_messages)))
@@ -484,7 +500,7 @@ class ChatbotApp(QMainWindow):
         self.personal_question_input.clear()
 
         response = ollama.generate(
-            model=LLAMA_MODEL,  # Use global constant
+            **MODEL_CONFIG,
             prompt=self.chat_history.toPlainText()+'\n'+personal_question
         )['response']
         html = markdown.markdown(response)
