@@ -1,6 +1,6 @@
 # Hearing Loss Assistant Chatbot
 
-A PyQt5-based chatbot application specialized for hearing loss education, developed by the Hearing Research Group at the University of Sheffield.
+A LLM-based chatbot application specialized for hearing loss education, developed by the Hearing Research Group at the University of Sheffield.
 
 
 ## Requirements
